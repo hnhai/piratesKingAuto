@@ -17,8 +17,13 @@ public class NotifyService implements INotifyService {
     @Value("${telegram.chat-id}")
     private String chatId;
 
+    @Value("${telegram.enable}")
+    private Boolean enable;
+
     @Override
     public void sendMessage(String message) {
-        client.sendMessage(telegramToken, chatId, message);
+        if (enable) {
+            client.sendMessage(telegramToken, chatId, message);
+        }
     }
 }

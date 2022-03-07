@@ -1,13 +1,17 @@
 spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
+
 io:
   piratesking:
     uri: https://api.piratesking.io
-    wallet-id: ${WALLET_ID}
-    bot-id: ${BOT_ID}
-    energy: ${ENERGY}
+    wallet-id: ${WALLET_ID:no_value}
+    bot-id: ${BOT_ID:1}
+    energy: ${ENERGY:5}
+    cron-time: ${CON_TIME:0 6 * * *}
+
 telegram:
+  enable: ${ENABLE_NOTI:true}
   uri: https://api.telegram.org
-  chat-id: ${CHAT_ID}
-  token: ${TELEGRAM_TOKEN}
+  chat-id: ${CHAT_ID:no_value}
+  token: ${TELEGRAM_TOKEN:no_value}
