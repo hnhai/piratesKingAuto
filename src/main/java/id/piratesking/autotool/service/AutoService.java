@@ -4,11 +4,14 @@ import id.piratesking.autotool.adapter.IPiratesKingClient;
 import id.piratesking.autotool.utils.CommonUtil;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class AutoService implements IAutoService {
 
     private final IPiratesKingClient client;
@@ -29,8 +32,12 @@ public class AutoService implements IAutoService {
     public void autoBattle() {
         var startBalance = client.getBalance(walletId);
         var piratesResponse = client.getPirates(ACTION, walletId);
-        // Todo check status and list pirates
         var pirates = piratesResponse.getResults();
+
+        if (CollectionUtils.isEmpty(pirates)) {
+            log.error("AutoService autoBattle get pirate fail");
+            return;
+        }
 
         var battles = new ArrayList<String>();
         int winCount = 0;
@@ -46,6 +53,7 @@ public class AutoService implements IAutoService {
             }
 
             var battle = client.battle(walletId, Integer.parseInt(pirate.getId()), botId);
+            // Todo check battle result
             if (battle.getCode() == 200) {
                 winCount++;
             }

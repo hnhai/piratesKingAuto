@@ -8,10 +8,10 @@ io:
     wallet-id: ${WALLET_ID:no_value}
     bot-id: ${BOT_ID:1}
     energy: ${ENERGY:5}
-    cron-time: ${CON_TIME:0 6 * * *}
+    cron-time: ${CON_TIME:0 6 * * * *}
 
 telegram:
-  enable: ${ENABLE_NOTI:true}
+  enable: ${ENABLE_NOTI:false}
   uri: https://api.telegram.org
   chat-id: ${CHAT_ID:no_value}
   token: ${TELEGRAM_TOKEN:no_value}
