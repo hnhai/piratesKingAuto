@@ -12,4 +12,13 @@ public class BattleResponse extends BaseResponse {
 
     Integer code;
     String message;
+    BattleResult results;
+
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class BattleResult {
+
+        Integer characterWin;
+    }
 }

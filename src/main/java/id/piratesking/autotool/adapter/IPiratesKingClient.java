@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IPiratesKingClient {
 
     @GetMapping("/api/battle-win")
-    BattleResponse battle(@RequestParam("id_wallet") String idWallet, @RequestParam("id_pirate") Integer idPirate, @RequestParam("id_boss") Integer idBoss);
+    BattleResponse battle(@RequestParam("action") String action, @RequestParam("id_wallet") String idWallet, @RequestParam("id_pirate") Integer idPirate, @RequestParam("id_boss") Integer idBoss);
 
     @GetMapping("/api/list-pirates")
     PiratesResponse getPirates(@RequestParam("action") String action, @RequestParam("id_wallet") String idWallet);
