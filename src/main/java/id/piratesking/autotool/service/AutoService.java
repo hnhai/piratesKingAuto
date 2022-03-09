@@ -43,28 +43,26 @@ public class AutoService implements IAutoService {
         }
 
         var battles = new ArrayList<String>();
-        int winCount = 0;
-        int total = 0;
-        int pirateEnergy = 0;
-        for (var pirate : pirates) {
-            if (total == 0) {
-                pirateEnergy = CommonUtil.parseInteger(pirate.getEnergy());
-            }
 
+        for (var pirate : pirates) {
+            var pirateEnergy = CommonUtil.parseInteger(pirate.getEnergy());
             if (pirateEnergy < energy) {
-                battles.add(String.format("Pirate Rank: %s, ID: %s, Win: %d/%d", pirate.getChestCode(), pirate.getId(), winCount, total));
-                total = 0;
-                winCount = 0;
+                log.info("pirateEnergy ");
                 continue;
             }
+            var turn = pirateEnergy / energy;
 
-            var battle = client.battle(BATTLE_ACTION, walletId, Integer.parseInt(pirate.getId()), botId);
-
-            if (isWinBattle(battle)) {
-                winCount++;
+            int winCount = 0;
+            int total = 0;
+            for (int i = 0; i < turn; i++) {
+                var battle = client.battle(BATTLE_ACTION, walletId, Integer.parseInt(pirate.getId()), botId);
+                if (isWinBattle(battle)) {
+                    winCount++;
+                }
+                total++;
             }
-            total++;
-            pirateEnergy -= energy;
+
+            battles.add(String.format("Pirate Rank: %s, ID: %s, Win: %d/%d", pirate.getChestCode(), pirate.getId(), winCount, total));
         }
         var endBalance = client.getBalance(walletId);
 
