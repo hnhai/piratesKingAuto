@@ -28,8 +28,7 @@ public class AutoService implements IAutoService {
     @Value("${io.piratesking.bot-id}")
     private Integer botId;
 
-    @Value("${io.piratesking.energy}")
-    private Integer energy;
+    private final Integer energy = 5;
 
     @Override
     public void autoBattle() {
@@ -47,14 +46,14 @@ public class AutoService implements IAutoService {
         for (var pirate : pirates) {
             var pirateEnergy = CommonUtil.parseInteger(pirate.getEnergy());
             if (pirateEnergy < energy) {
-                log.info("pirateEnergy ");
+                log.info("pirateEnergy not enough");
                 continue;
             }
-            var turn = pirateEnergy / energy;
+            var turns = pirateEnergy / energy;
 
             int winCount = 0;
             int total = 0;
-            for (int i = 0; i < turn; i++) {
+            for (int i = 0; i < turns; i++) {
                 var battle = client.battle(BATTLE_ACTION, walletId, Integer.parseInt(pirate.getId()), botId);
                 if (isWinBattle(battle)) {
                     winCount++;
