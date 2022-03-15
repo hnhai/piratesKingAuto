@@ -6,6 +6,7 @@ import id.piratesking.autotool.utils.CommonUtil;
 import java.util.ArrayList;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class AutoService implements IAutoService {
     private final Integer energy = 5;
 
     @Override
+    @SneakyThrows
     public void autoBattle() {
         var startBalance = client.getBalance(walletId);
         var piratesResponse = client.getPirates(GET_ALL_PIRATES_ACTION, walletId);
@@ -55,10 +57,13 @@ public class AutoService implements IAutoService {
             int total = 0;
             for (int i = 0; i < turns; i++) {
                 var battle = client.battle(BATTLE_ACTION, walletId, Integer.parseInt(pirate.getId()), botId);
-                if (isWinBattle(battle)) {
+                boolean winBattle = winBattle(battle);
+                log.info("Pirate ID: {}, Rank: {}, win battle: {}", pirate.getId(), pirate.getChestCode(), winBattle);
+                if (winBattle) {
                     winCount++;
                 }
                 total++;
+                Thread.sleep(1000);
             }
 
             battles.add(String.format("Pirate Rank: %s, ID: %s, Win: %d/%d", pirate.getChestCode(), pirate.getId(), winCount, total));
@@ -69,7 +74,7 @@ public class AutoService implements IAutoService {
         notifyService.sendMessage(message);
     }
 
-    private boolean isWinBattle(BattleResponse response) {
+    private boolean winBattle(BattleResponse response) {
         return response.getCode() == 200 && Objects.nonNull(response.getResults()) && Objects.nonNull(response.getResults().getCharacterWin()) && response.getResults().getCharacterWin() == 1;
     }
 }

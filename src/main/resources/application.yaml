@@ -7,7 +7,7 @@ io:
     uri: https://api.piratesking.io
     wallet-id: ${WALLET_ID:no_value}
     bot-id: ${BOT_ID:1}
-    cron-time: ${CON_TIME:0 6 * * * *}
+    cron-time: ${CON_TIME:0 0 8 ? * *}
 
 telegram:
   enable: ${ENABLE_NOTI:false}
