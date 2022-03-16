@@ -63,7 +63,7 @@ public class AutoService implements IAutoService {
                     winCount++;
                 }
                 total++;
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             }
 
             battles.add(String.format("Pirate Rank: %s, ID: %s, Win: %d/%d", pirate.getChestCode(), pirate.getId(), winCount, total));
