@@ -5,7 +5,7 @@ Auto tool for piratesking.io
 # Environment
  - WALLET_ID (Required) :  Your Wallet Address (You can get when login to game or MetaMask, ...)
  - BOT_ID (Default 1): What Bot ? 1 - Easy, 2 - Normal, 3 - Hard, 4 - Challenge
- - CON_TIME (Default 6AM UTC +7 every day): When auto run ?
+ - CRON_TIME (Default 8AM UTC +7 every day): When auto run ?
  - ENABLE_NOTI (Default false): Enable notification to Telegram
  - CHAT_ID: Telegram chat id
  - TELEGRAM_TOKEN: Token of Telegram bot
